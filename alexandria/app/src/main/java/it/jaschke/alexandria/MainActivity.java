@@ -12,6 +12,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,6 +46,8 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 
     private OnFragmentCallBack onFragmentCallBack;
 
+    /*Upper custom Actionbar*/
+    private Toolbar mToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,8 +66,11 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         title = getTitle();
 
+        mToolbar = (Toolbar) findViewById(R.id.tb_app_bar);
+        setSupportActionBar(mToolbar);
+
         // Set up the drawer.
-        navigationDrawerFragment.setUp(R.id.navigation_drawer,
+        navigationDrawerFragment.setUp(R.id.navigation_drawer,mToolbar,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
