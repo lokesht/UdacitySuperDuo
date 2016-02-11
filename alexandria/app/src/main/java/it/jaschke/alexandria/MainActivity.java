@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -25,7 +26,7 @@ import it.jaschke.alexandria.api.Callback;
 import it.jaschke.alexandria.camera.barcode.BarcodeCaptureActivity;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, Callback {
+public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, Callback {
 
     public static final String TAG = MainActivity.class.getName();
     /**
@@ -51,11 +52,11 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         IS_TABLET = isTablet();
-        if (IS_TABLET) {
-            setContentView(R.layout.activity_main_tablet);
-        } else {
+//        if (IS_TABLET) {
+//            setContentView(R.layout.activity_main_tablet);
+//        } else {
             setContentView(R.layout.activity_main);
-        }
+//        }
 
         messageReciever = new MessageReciever();
         IntentFilter filter = new IntentFilter(MESSAGE_EVENT);
@@ -69,15 +70,10 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         setSupportActionBar(mToolbar);
 
         // Set up the drawer.
-        navigationDrawerFragment.setUp(R.id.navigation_drawer,mToolbar,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+//        navigationDrawerFragment.setUp(R.id.navigation_drawer,mToolbar,
+//                (DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
-    public void onTest(View v)
-    {
-        Intent intent = new Intent(this, BarcodeCaptureActivity.class);
-        startActivityForResult(intent, AddBook.RC_BARCODE_CAPTURE);
-    }
     @Override
     public void onNavigationDrawerItemSelected(int position) {
 

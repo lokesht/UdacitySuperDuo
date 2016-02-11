@@ -7,13 +7,11 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/test"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <include
-            android:id="@+id/tb_app_bar"
             layout="@layout/app_toolbar" />
 
         <!-- As the main content view, the view below consumes the entire
