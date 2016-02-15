@@ -27,6 +27,7 @@
     <dimen name="showcase_radius_outer">75dp</dimen>
     <dimen name="def_height">48dp</dimen>
     <dimen name="min_width_button">100dp</dimen>
+
 </resources>
 
 

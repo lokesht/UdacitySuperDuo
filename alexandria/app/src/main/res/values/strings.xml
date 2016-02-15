@@ -41,4 +41,6 @@
     <string name="barcode_success">Barcode read successfully</string>
     <string name="barcode_failure">No barcode captured</string>
     <string name="barcode_error">"Error reading barcode: %1$s"</string>
+    <string name="pref_key_start_fragment">pref_startFragment</string>
+    <string name="pref_def_key_start_fragment">0</string>
 </resources>
