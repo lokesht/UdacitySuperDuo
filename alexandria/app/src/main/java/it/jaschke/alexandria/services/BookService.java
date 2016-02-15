@@ -27,7 +27,7 @@ import it.jaschke.alexandria.data.AlexandriaContract;
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
  * a service on a separate handler thread.
- * <p/>
+ * <p>
  */
 public class BookService extends IntentService {
 
@@ -88,8 +88,9 @@ public class BookService extends IntentService {
             bookEntry.close();
             return;
         }
-
-        bookEntry.close();
+        if (bookEntry != null) {
+            bookEntry.close();
+        }
 
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;

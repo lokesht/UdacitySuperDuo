@@ -18,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import it.jaschke.alexandria.api.Callback;
@@ -67,11 +68,10 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         title = getTitle();
 
-
         // Set up the drawer.
         navigationDrawerFragment.setUp(toolbar, R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
-
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
@@ -174,6 +174,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
             if (intent.getStringExtra(MESSAGE_KEY) != null) {
                 Toast.makeText(MainActivity.this, intent.getStringExtra(MESSAGE_KEY), Toast.LENGTH_LONG).show();
             }
+            onFragmentCallBack.onFragmentCallBack(intent.getStringExtra(MESSAGE_KEY));
         }
     }
 
