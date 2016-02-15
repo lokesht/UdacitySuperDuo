@@ -9,27 +9,19 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-
-import com.google.android.gms.common.api.CommonStatusCodes;
-import com.google.android.gms.vision.barcode.Barcode;
-
-
 import it.jaschke.alexandria.api.Callback;
-import it.jaschke.alexandria.camera.barcode.BarcodeCaptureActivity;
-
-
-
+import it.jaschke.alexandria.constant.AppConstants;
 
 public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, Callback {
 
@@ -40,7 +32,6 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
      */
     private NavigationDrawerFragment navigationDrawerFragment;
 
-
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
@@ -48,15 +39,13 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
     public static boolean IS_TABLET = false;
     private BroadcastReceiver messageReciever;
 
-
     public static final String MESSAGE_EVENT = "MESSAGE_EVENT";
     public static final String MESSAGE_KEY = "MESSAGE_EXTRA";
 
-
     private OnFragmentCallBack onFragmentCallBack;
+    private FragmentTransaction fragmentTransaction;
+    private Toolbar toolbar;
 
-
-    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,15 +56,12 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
             setContentView(R.layout.activity_main);
         }
 
-
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         messageReciever = new MessageReciever();
         IntentFilter filter = new IntentFilter(MESSAGE_EVENT);
         LocalBroadcastManager.getInstance(this).registerReceiver(messageReciever, filter);
-
 
         navigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -90,31 +76,27 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
     @Override
     public void onNavigationDrawerItemSelected(int position) {
 
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment nextFragment;
-
-
+        String FRAG_TAG = "";
         switch (position) {
             default:
             case 0:
                 nextFragment = new ListOfBooks();
+                FRAG_TAG = AppConstants.FRAG_BOOK_LIST;
                 break;
             case 1:
                 nextFragment = new AddBook();
+                FRAG_TAG = AppConstants.FRAG_ADD_BOOK;
                 break;
             case 2:
                 nextFragment = new About();
+                FRAG_TAG = AppConstants.FRAG_ABOUT;
                 break;
-
-
         }
 
+        replaceFragment(nextFragment, FRAG_TAG);
 
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, nextFragment)
-                .addToBackStack((String) title)
-                .commit();
     }
 
 
@@ -129,7 +111,6 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(title);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -152,12 +133,10 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-
         if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
-
 
         return super.onOptionsItemSelected(item);
     }
@@ -169,34 +148,25 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         super.onDestroy();
     }
 
-
     @Override
     public void onItemSelected(String ean) {
         Bundle args = new Bundle();
         args.putString(BookDetail.EAN_KEY, ean);
 
-
         BookDetail fragment = new BookDetail();
         fragment.setArguments(args);
-
 
         int id = R.id.container;
         if (findViewById(R.id.right_container) != null) {
             id = R.id.right_container;
         }
-        getSupportFragmentManager().beginTransaction()
-                .replace(id, fragment)
-                .addToBackStack("Book Detail")
-                .commit();
 
-
+        replaceFragment(id, fragment, AppConstants.FRAG_BOOK_DETAIL);
     }
-
 
     public void setOnFragmentCallBack(OnFragmentCallBack onFragmentCallBack) {
         this.onFragmentCallBack = onFragmentCallBack;
     }
-
 
     private class MessageReciever extends BroadcastReceiver {
         @Override
@@ -207,18 +177,15 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         }
     }
 
-
     public void goBack(View view) {
         getSupportFragmentManager().popBackStack();
     }
-
 
     private boolean isTablet() {
         return (getApplicationContext().getResources().getConfiguration().screenLayout
                 & Configuration.SCREENLAYOUT_SIZE_MASK)
                 >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
-
 
     @Override
     public void onBackPressed() {
@@ -231,5 +198,33 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 
     interface OnFragmentCallBack {
         void onFragmentCallBack(String barcode);
+    }
+
+    public void replaceFragment(int container_id, Fragment fragment, String FRAGMENT_TAG) {
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(container_id, fragment, FRAGMENT_TAG);
+
+        if (getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG) == null) {
+            if (AppConstants.DEBUG) {
+                Toast.makeText(MainActivity.this, "Inside Fragment add", Toast.LENGTH_SHORT).show();
+            }
+            fragmentTransaction.addToBackStack(FRAGMENT_TAG);
+        }
+
+        fragmentTransaction.commit();
+    }
+
+    public void replaceFragment(Fragment fragment, String FRAGMENT_TAG) {
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.container, fragment, FRAGMENT_TAG);
+
+        if (getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG) == null) {
+            if (AppConstants.DEBUG) {
+                Toast.makeText(MainActivity.this, "Inside Fragment add", Toast.LENGTH_SHORT).show();
+            }
+            fragmentTransaction.addToBackStack(FRAGMENT_TAG);
+        }
+
+        fragmentTransaction.commit();
     }
 }
