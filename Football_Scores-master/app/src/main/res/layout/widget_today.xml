@@ -76,6 +76,13 @@
                         tools:text="48" />
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/"
+                        tools:text="just for place holding"
+                        android:textSize="36sp" />
+
+                    <TextView
                         android:id="@+id/widget_away_team"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -113,7 +120,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="/"
-                        android:textSize="35dp" />
+                        android:textColor="@color/primary_text"
+                        android:textSize="36sp" />
 
                     <TextView
                         android:id="@+id/widget_away_team_score"
