@@ -9,11 +9,18 @@ import android.view.MenuItem;
 
 public class MainActivity extends ActionBarActivity
 {
-    public static int selected_match_id;
-    public static int current_fragment = 2;
     public static String LOG_TAG = "MainActivity";
+
+    /**Holds the match Id which has been selected by user
+    * so that It should not get lost when user rotates device*/
+    public static int selected_match_id;
+
+    /*By default shows today's fragment as first one*/
+    public static int current_fragment = 2;
+
     private final String save_tag = "Save Test";
     private PagerFragment my_main;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -10,12 +10,14 @@ import android.net.Uri;
 import android.widget.RemoteViews;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import barqsoft.footballscores.DatabaseContract;
 import barqsoft.footballscores.MainActivity;
 import barqsoft.footballscores.MainScreenFragment;
 import barqsoft.footballscores.R;
+import barqsoft.footballscores.Utilies;
 import barqsoft.footballscores.widget.TodaysMatchProvider;
 
 /**
@@ -61,7 +63,7 @@ public class WidgetUpdateService extends IntentService {
         String todayDate = mformat.format(fragmentdate);
 
         Uri todaysUri = DatabaseContract.scores_table.buildScoreWithDate();
-        Cursor data = getContentResolver().query(todaysUri, SCORE_COLUMNS, null, new String[]{todayDate}, null);
+        Cursor data = getContentResolver().query(todaysUri, SCORE_COLUMNS, null, new String[]{todayDate}, DatabaseContract.scores_table.TIME_COL);
 
         if (data == null) {
             return;
@@ -72,16 +74,50 @@ public class WidgetUpdateService extends IntentService {
             return;
         }
 
+        /*Match which is most closet to current time*/
+        String strTimeNow = Calendar.getInstance().get(Calendar.HOUR) + ":" + Calendar.getInstance().get(Calendar.HOUR);
+        long timeNow = Utilies.getTimeInSecond(strTimeNow);
+        /*Start with one day difference*/
+        long closet = 24 * 60 * 60;
+        int counter = -1;
+        int mark = 0;
+        do {
+            counter++;
+
+            String strTime = data.getString(INDEX_TIME_COL);
+            long timeInSec = Utilies.getTimeInSecond(strTime);
+            if ((Math.abs(timeInSec - timeNow)) < closet) {
+                closet = Math.abs(timeInSec - timeNow);
+                mark = counter;
+            }
+        } while (data.moveToNext());
+
+        /*Now move to exact location where time very close to current time*/
+        data.moveToPosition(mark);
+
         for (int appWidgetId : appWidgetIds) {
             int layoutId = R.layout.widget_today;
+
 
             RemoteViews remoteViews = new RemoteViews(getPackageName(), layoutId);
             remoteViews.setTextViewText(R.id.widget_home_team, data.getString(INDEX_HOME_COL));
             remoteViews.setTextViewText(R.id.widget_away_team, data.getString(INDEX_AWAY_COL));
-            remoteViews.setTextViewText(R.id.widget_home_team_score, data.getString(INDEX_HOME_GOAL_COL));
-            remoteViews.setTextViewText(R.id.widget_away_team_score, data.getString(INDEX_AWAY_GOAL_COL));
+
+            String home_goal = data.getString(INDEX_HOME_GOAL_COL);
+            String away_goal = data.getString(INDEX_AWAY_GOAL_COL);
+            if (home_goal.equalsIgnoreCase("-1")) {
+                home_goal = "-";
+            }
+
+            if (away_goal.equalsIgnoreCase("-1")) {
+                away_goal = "-";
+            }
+
+            remoteViews.setTextViewText(R.id.widget_home_team_score, home_goal);
+            remoteViews.setTextViewText(R.id.widget_away_team_score, away_goal);
 
             String time = data.getString(INDEX_TIME_COL);
+
             time = getString(R.string.msg_match_start_time, time);
             remoteViews.setTextViewText(R.id.tv_widget_match_start_time, time);
 

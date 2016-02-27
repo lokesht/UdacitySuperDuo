@@ -20,11 +20,11 @@ import barqsoft.footballscores.service.myFetchService;
  * A placeholder fragment containing a simple view.
  */
 public class MainScreenFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+
     public scoresAdapter mAdapter;
     public static final int SCORES_LOADER = 0;
     private String[] fragmentdate = new String[1];
     private int last_selected_item = -1;
-
     private View rootView;
 
     public MainScreenFragment() {
@@ -48,13 +48,23 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
         mAdapter = new scoresAdapter(getActivity(), null, 0);
         score_list.setAdapter(mAdapter);
         getLoaderManager().initLoader(SCORES_LOADER, null, this);
+
         mAdapter.detail_match_id = MainActivity.selected_match_id;
         score_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ViewHolder selected = (ViewHolder) view.getTag();
-                mAdapter.detail_match_id = selected.match_id;
-                MainActivity.selected_match_id = (int) selected.match_id;
+
+                /*TODO Collapse code View again as user preses again
+                * 1. Why Not coming here when user presses second time on Item*/
+                if (mAdapter.detail_match_id == selected.match_id) {
+                    mAdapter.detail_match_id = 0;
+                    MainActivity.selected_match_id = 0;
+                } else {
+                    mAdapter.detail_match_id = selected.match_id;
+                    MainActivity.selected_match_id = (int) selected.match_id;
+                }
+
                 mAdapter.notifyDataSetChanged();
             }
         });
@@ -63,21 +73,13 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        /**Order by time of match to give more clarity to user when scrolling to list*/
         return new CursorLoader(getActivity(), DatabaseContract.scores_table.buildScoreWithDate(),
-                null, null, fragmentdate, null);
+                null, null, fragmentdate, DatabaseContract.scores_table.TIME_COL);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        // Log.v(FetchScoreTask.LOG_TAG,"loader finished");
-        //cursor.moveToFirst();
-        /*
-        while (!cursor.isAfterLast())
-        {
-            Log.v(FetchScoreTask.LOG_TAG,cursor.getString(1));
-            cursor.moveToNext();
-        }
-        */
 
         int i = 0;
         cursor.moveToFirst();

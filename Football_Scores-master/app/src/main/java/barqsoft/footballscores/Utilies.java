@@ -97,6 +97,14 @@ public class Utilies {
         }
     }
 
+    public static long getTimeInSecond(String strTime) {
+        long timeInSec = 0;
+        String t[] = strTime.split(":");
+        timeInSec = Integer.parseInt(t[0]) * 3600 + Integer.parseInt(t[1]) * 60;
+
+        Log.i(TAG, "getTimeInMillis: " + strTime + " -In Sec- " + timeInSec);
+        return timeInSec;
+    }
 
     /*Copy database outside to check data*/
     private void writeDatabase(Context context) {

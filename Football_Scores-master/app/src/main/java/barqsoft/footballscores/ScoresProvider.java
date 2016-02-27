@@ -13,6 +13,8 @@ import android.net.Uri;
  */
 public class ScoresProvider extends ContentProvider
 {
+    public static String ACTION_DATA_UPDATE = "barqsoft.footballscores.ACTION_DATA_UPDATED";
+
     private static ScoresDBHelper mOpenHelper;
     private static final int MATCHES = 100;
     private static final int MATCHES_WITH_LEAGUE = 101;

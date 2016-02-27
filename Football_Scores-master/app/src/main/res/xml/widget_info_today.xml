@@ -22,5 +22,5 @@
     android:minWidth="@dimen/widget_today_default_width"
     android:previewImage="@drawable/img_widget_preview"
     android:resizeMode="horizontal|vertical"
-    android:updatePeriodMillis="0"
+    android:updatePeriodMillis="3600000"
     tools:ignore="UnusedAttribute" />
