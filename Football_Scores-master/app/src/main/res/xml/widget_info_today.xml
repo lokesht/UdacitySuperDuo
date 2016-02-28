@@ -15,12 +15,12 @@
 -->
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:initialLayout="@layout/widget_today"
+    android:initialLayout="@layout/widget_today_large"
     android:minHeight="@dimen/widget_today_default_height"
     android:minResizeHeight="@dimen/widget_today_min_resize_height"
     android:minResizeWidth="@dimen/widget_today_min_resize_width"
     android:minWidth="@dimen/widget_today_default_width"
     android:previewImage="@drawable/img_widget_preview"
-    android:resizeMode="horizontal|vertical"
-    android:updatePeriodMillis="3600000"
+    android:resizeMode="horizontal"
+    android:updatePeriodMillis="0"
     tools:ignore="UnusedAttribute" />

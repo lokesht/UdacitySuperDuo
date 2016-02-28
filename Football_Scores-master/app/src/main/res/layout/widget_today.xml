@@ -36,109 +36,92 @@
             tools:text="@string/msg_match_start_time" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/widget_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_launcher" />
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/widget_icon"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/default_padding">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/widget_home_team"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/default_padding">
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:padding="@dimen/margin_tiny"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/accent"
+                    tools:text="48" />
 
-                    <TextView
-                        android:id="@+id/widget_home_team"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif"
-                        android:gravity="center"
-                        android:padding="@dimen/default_padding"
-                        android:textAppearance="?android:textAppearanceMedium"
-                        android:textColor="@color/accent"
-                        tools:text="48" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="/"
-                        tools:text="just for place holding"
-                        android:textSize="36sp" />
-
-                    <TextView
-                        android:id="@+id/widget_away_team"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif"
-                        android:gravity="center"
-                        android:padding="@dimen/default_padding"
-                        android:textAppearance="?android:textAppearanceMedium"
-                        android:textColor="@color/secondary_text"
-                        tools:text="28" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/default_padding"
-                    android:orientation="horizontal">
+                    android:text="/"
+                    android:textSize="24sp"
+                    tools:text="just for place holding" />
 
-                    <TextView
-                        android:id="@+id/widget_home_team_score"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif"
-                        android:gravity="center"
-                        android:padding="@dimen/default_padding"
-                        android:textAppearance="?android:textAppearanceLarge"
-                        android:textColor="@color/accent"
-                        android:text="48" />
+                <TextView
+                    android:id="@+id/widget_away_team"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:padding="@dimen/margin_tiny"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/secondary_text"
+                    tools:text="28" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="/"
-                        android:textColor="@color/primary_text"
-                        android:textSize="36sp" />
+            </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/widget_away_team_score"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif"
-                        android:gravity="center"
-                        android:padding="@dimen/default_padding"
-                        android:textAppearance="?android:textAppearanceLarge"
-                        android:textColor="@color/secondary_text"
-                        tools:text="28" />
-                </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_tiny"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/widget_home_team_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:padding="@dimen/default_padding"
+                    android:text="48"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    android:textColor="@color/accent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="/"
+                    android:textColor="@color/primary_text"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/widget_away_team_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:padding="@dimen/default_padding"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    android:textColor="@color/secondary_text"
+                    tools:text="28" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
-
 </FrameLayout>
