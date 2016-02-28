@@ -15,11 +15,11 @@
         android:dividerHeight="15sp" />
 
     <TextView
-        android:id="@+id/tv_user_message"
+        android:id="@+id/tv_empty_message"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
         android:gravity="center"
-        android:text="No match :( "
-        android:textSize="@dimen/text_header" />
+        android:text="@string/msg_no_match"
+        android:textAppearance="?android:textAppearanceLarge" />
 </FrameLayout>

@@ -89,7 +89,7 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
         }
 
         if (i > 0) {
-            TextView textView = (TextView) rootView.findViewById(R.id.tv_user_message);
+            TextView textView = (TextView) rootView.findViewById(R.id.tv_empty_message);
             textView.setVisibility(View.GONE);
         }
 

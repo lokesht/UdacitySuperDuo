@@ -1,4 +1,4 @@
-package barqsoft.footballscores.service;
+package barqsoft.footballscores.widget;
 
 import android.annotation.TargetApi;
 import android.app.IntentService;
@@ -23,14 +23,13 @@ import barqsoft.footballscores.DatabaseContract;
 import barqsoft.footballscores.MainActivity;
 import barqsoft.footballscores.R;
 import barqsoft.footballscores.Utilies;
-import barqsoft.footballscores.widget.TodaysMatchProvider;
 
 /**
  * Created by Lokesh on 25/02/2016.
  */
-public class WidgetUpdateService extends IntentService {
+public class TodaysWidgetUpdateService extends IntentService {
 
-    private static final String TAG = WidgetUpdateService.class.getName();
+    private static final String TAG = TodaysWidgetUpdateService.class.getName();
 
     private static final String[] SCORE_COLUMNS = {
             DatabaseContract.scores_table.MATCH_ID,
@@ -50,11 +49,11 @@ public class WidgetUpdateService extends IntentService {
     private static final int INDEX_LEAGUE_COL = 5;
     private static final int INDEX_TIME_COL = 6;
 
-    public WidgetUpdateService() {
+    public TodaysWidgetUpdateService() {
         super("Football Score");
     }
 
-    public WidgetUpdateService(String name) {
+    public TodaysWidgetUpdateService(String name) {
         super(name);
     }
 
