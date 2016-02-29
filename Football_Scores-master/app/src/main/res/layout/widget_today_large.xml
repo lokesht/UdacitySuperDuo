@@ -141,5 +141,12 @@
         </LinearLayout>
     </LinearLayout>
 
-
+    <TextView
+        android:id="@+id/tv_empty_message"
+        android:text="@string/msg_no_match"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </FrameLayout>

@@ -131,7 +131,6 @@ public class DetailWidgetRemoteViewsService extends RemoteViewsService {
 
                 views.setImageViewResource(R.id.home_crest,Utilies.getTeamCrestByTeamName(data.getString(COL_HOME)));
                 views.setImageViewResource(R.id.away_crest,Utilies.getTeamCrestByTeamName(data.getString(COL_AWAY)));
-
                 return views;
             }
 

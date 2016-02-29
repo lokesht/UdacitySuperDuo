@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import java.text.SimpleDateFormat;
@@ -142,8 +143,11 @@ public class TodaysWidgetUpdateService extends IntentService {
             }
 
             RemoteViews remoteViews = new RemoteViews(getPackageName(), layoutId);
-            remoteViews.setTextViewText(R.id.widget_home_team, strHomeTeam);
 
+            /*make Empty one null*/
+            remoteViews.setViewVisibility(R.id.tv_empty_message, View.GONE);
+
+            remoteViews.setTextViewText(R.id.widget_home_team, strHomeTeam);
             remoteViews.setTextViewText(R.id.widget_away_team, strAwayTeam);
 
             String home_goal = data.getString(INDEX_HOME_GOAL_COL);

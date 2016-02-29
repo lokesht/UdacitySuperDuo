@@ -14,7 +14,6 @@ import barqsoft.footballscores.ScoresProvider;
  */
 public class TodaysMatchProvider extends AppWidgetProvider {
 
-    //TODO Empty view of Widget
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         context.startService(new Intent(context, TodaysWidgetUpdateService.class));
