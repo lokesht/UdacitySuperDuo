@@ -23,6 +23,8 @@ import barqsoft.footballscores.Utilies;
 /**
  * RemoteViewsService controlling the data being shown in the scrollable weather detail widget
  */
+
+//TODO 1. No Match View in widget 2.Widget List
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class DetailWidgetRemoteViewsService extends RemoteViewsService {
     public final String LOG_TAG = DetailWidgetRemoteViewsService.class.getSimpleName();
@@ -39,15 +41,15 @@ public class DetailWidgetRemoteViewsService extends RemoteViewsService {
     };
 
     // these indices must match the projection
-    public static final int COL_DATE = 1;
-    public static final int COL_MATCHTIME = 2;
-    public static final int COL_HOME = 3;
-    public static final int COL_AWAY = 4;
-    public static final int COL_LEAGUE = 5;
-    public static final int COL_HOME_GOALS = 6;
-    public static final int COL_AWAY_GOALS = 7;
-    public static final int COL_MATCH_ID = 8;
-    public static final int COL_MATCHDAY = 9;
+    public static final int COL_DATE = 0;
+    public static final int COL_MATCHTIME = 1;
+    public static final int COL_HOME = 2;
+    public static final int COL_AWAY = 3;
+    public static final int COL_LEAGUE = 4;
+    public static final int COL_HOME_GOALS = 5;
+    public static final int COL_AWAY_GOALS = 6;
+    public static final int COL_MATCH_ID = 7;
+    public static final int COL_MATCHDAY = 8;
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
@@ -119,7 +121,13 @@ public class DetailWidgetRemoteViewsService extends RemoteViewsService {
                     views.setTextColor(R.id.away_name,getResources().getColor(R.color.primary_text));
                 }
 
-                views.setTextViewText(R.id.score_textview,Utilies.getScores(home_goal, away_goal));
+                String goal = Utilies.getScores(home_goal, away_goal);
+                views.setTextViewText(R.id.score_textview,goal);
+                String time = data.getString(COL_MATCHTIME);
+                views.setTextViewText(R.id.data_textview,time);
+
+                views.setTextColor(R.id.score_textview,getResources().getColor(R.color.primary_text));
+                views.setTextColor(R.id.data_textview,getResources().getColor(R.color.primary_text));
 
                 views.setImageViewResource(R.id.home_crest,Utilies.getTeamCrestByTeamName(data.getString(COL_HOME)));
                 views.setImageViewResource(R.id.away_crest,Utilies.getTeamCrestByTeamName(data.getString(COL_AWAY)));
