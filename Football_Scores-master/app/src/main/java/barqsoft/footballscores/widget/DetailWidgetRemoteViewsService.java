@@ -24,7 +24,6 @@ import barqsoft.footballscores.Utilies;
  * RemoteViewsService controlling the data being shown in the scrollable weather detail widget
  */
 
-//TODO 1. No Match View in widget 2.Widget List
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class DetailWidgetRemoteViewsService extends RemoteViewsService {
     public final String LOG_TAG = DetailWidgetRemoteViewsService.class.getSimpleName();

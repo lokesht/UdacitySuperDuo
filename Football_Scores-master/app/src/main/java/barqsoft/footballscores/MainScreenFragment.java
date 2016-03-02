@@ -55,8 +55,6 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ViewHolder selected = (ViewHolder) view.getTag();
 
-                /*TODO Collapse code View again as user preses again
-                * 1. Why Not coming here when user presses second time on Item*/
                 if (mAdapter.detail_match_id == selected.match_id) {
                     mAdapter.detail_match_id = 0;
                     MainActivity.selected_match_id = 0;
