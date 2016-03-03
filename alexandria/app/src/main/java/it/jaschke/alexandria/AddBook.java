@@ -75,6 +75,10 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         progress = new ProgressDialog(getContext());
         progress.setTitle("Searching Book");
 
+        // launch barcode activity.
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.setOnFragmentCallBack(AddBook.this);
+
         ean.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -90,6 +94,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             public void afterTextChanged(Editable s) {
                 String ean = s.toString();
                 //catch isbn10 numbers
+                tvErrorMessage.setVisibility(View.GONE);
                 if (ean.length() == 10 && !ean.startsWith("978")) {
                     ean = "978" + ean;
                 }
@@ -97,6 +102,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
                     clearFields();
                     return;
                 }
+                tvErrorMessage.setVisibility(View.VISIBLE);
                 progress.show();
                 //Once we have an ISBN, start a book intent
                 Intent bookIntent = new Intent(getContext(), BookService.class);
@@ -110,9 +116,6 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         rootView.findViewById(R.id.scan_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // launch barcode activity.
-                MainActivity mainActivity = (MainActivity) getActivity();
-                mainActivity.setOnFragmentCallBack(AddBook.this);
 
                 Intent intent = new Intent(getContext(), BarcodeCaptureActivity.class);
 //                intent.putExtra(BarcodeCaptureActivity.AutoFocus, false);
@@ -149,6 +152,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        tvErrorMessage.setVisibility(View.VISIBLE);
         Log.i(TAG, "onActivityResult: " + requestCode + "--" + resultCode + "--" + data.toString());
         if (requestCode == AddBook.RC_BARCODE_CAPTURE) {
             if (resultCode == CommonStatusCodes.SUCCESS) {
@@ -194,23 +198,28 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     @Override
     public void onLoadFinished(android.support.v4.content.Loader<Cursor> loader, Cursor data) {
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (progress != null && progress.isShowing()) {
-                    progress.dismiss();
-                    tvErrorMessage.setText("Sorry, Check you connection");
-                }
-            }
-        }, 10000);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                if (progress != null && progress.isShowing()) {
+//                    progress.dismiss();
+//                    tvErrorMessage.setText("Check your ISBN Number");
+//                }
+//            }
+//        }, 10000);
 
-        if (!data.moveToFirst()) {
-            return;
-        }
         /*If reach here means got the data*/
         if (progress != null && progress.isShowing()) {
             progress.dismiss();
         }
+
+        if (!data.moveToFirst()) {
+            return;
+        }
+//        /*If reach here means got the data*/
+//        if (progress != null && progress.isShowing()) {
+//            progress.dismiss();
+//        }
         tvErrorMessage.setVisibility(View.GONE);
 
         String bookTitle = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.TITLE));
@@ -259,6 +268,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         rootView.findViewById(R.id.bookCover).setVisibility(View.INVISIBLE);
 
         rootView.findViewById(R.id.ll_bottomView).setVisibility(View.GONE);
+        tvErrorMessage.setText("");
     }
 
 
@@ -270,6 +280,8 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
     @Override
     public void onFragmentCallBack(String barcode) {
-        tvErrorMessage.setText(barcode);
+        if (barcode != null) {
+            tvErrorMessage.setText(barcode);
+        }
     }
 }

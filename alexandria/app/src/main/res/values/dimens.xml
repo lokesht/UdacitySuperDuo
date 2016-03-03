@@ -1,5 +1,8 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
+
+    <dimen name="list_item_extra_padding">0dp</dimen>
+
     <integer name="ean_size">13</integer>
     <integer name="ean_width">8</integer>
     <dimen name="head_line">24sp</dimen>

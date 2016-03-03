@@ -174,7 +174,10 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
             if (intent.getStringExtra(MESSAGE_KEY) != null) {
                 Toast.makeText(MainActivity.this, intent.getStringExtra(MESSAGE_KEY), Toast.LENGTH_LONG).show();
             }
-            onFragmentCallBack.onFragmentCallBack(intent.getStringExtra(MESSAGE_KEY));
+            if (onFragmentCallBack != null) {
+                onFragmentCallBack.onFragmentCallBack(intent.getStringExtra(MESSAGE_KEY));
+            }
+
         }
     }
 
