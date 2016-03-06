@@ -3,6 +3,10 @@
 
     <string name="app_name" translatable="false">Football Scores</string>
 
+    <string name="sync_account_type" translatable="false">app.foorball.in</string>
+    <string name="content_authority" translatable="false">barqsoft.footballscores</string>
+
+
     <string name="todays_match_score_provider" translatable="false">>Football Scores</string>
     <string name="action_settings" translatable="false">>Settings</string>
     <string name="test_text" translatable="false">>Test</string>
