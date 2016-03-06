@@ -1,14 +1,19 @@
 package it.jaschke.alexandria;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v7.internal.view.menu.ListMenuItemView;
 import android.text.Editable;
@@ -52,6 +57,8 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     private TextView tvErrorMessage;
     private ProgressDialog progress;
     private LinearLayout llBottomView;
+
+    final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
 
     public AddBook() {
     }
@@ -109,6 +116,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
                 bookIntent.putExtra(BookService.EAN, ean);
                 bookIntent.setAction(BookService.FETCH_BOOK);
                 getContext().startService(bookIntent);
+
                 AddBook.this.restartLoader();
             }
         });
@@ -117,10 +125,20 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(getContext(), BarcodeCaptureActivity.class);
+
+                // Assume thisActivity is the current activity
+                int permissionCheck = ContextCompat.checkSelfPermission(getActivity(),
+                        Manifest.permission.CAMERA);
+                if (PackageManager.PERMISSION_GRANTED == permissionCheck) {
+                    Intent intent = new Intent(getContext(), BarcodeCaptureActivity.class);
 //                intent.putExtra(BarcodeCaptureActivity.AutoFocus, false);
 //                intent.putExtra(BarcodeCaptureActivity.UseFlash, false);
-                startActivityForResult(intent, RC_BARCODE_CAPTURE);
+                    startActivityForResult(intent, RC_BARCODE_CAPTURE);
+                } else {
+                    ActivityCompat.requestPermissions(getActivity(),
+                            new String[]{Manifest.permission.CAMERA},
+                            MY_PERMISSIONS_REQUEST_CAMERA);
+                }
             }
         });
 
@@ -148,6 +166,24 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         }
 
         return rootView;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CAMERA: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    Intent intent = new Intent(getContext(), BarcodeCaptureActivity.class);
+                    startActivityForResult(intent, RC_BARCODE_CAPTURE);
+
+                }
+            }
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 
     @Override

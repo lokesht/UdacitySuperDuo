@@ -36,8 +36,11 @@
 
                 <ImageView
                     android:id="@+id/fullBookCover"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="150dp"
+                    android:layout_height="250dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="@dimen/default_margin"
+                    android:layout_marginRight="@dimen/default_margin"
                     android:layout_alignLeft="@+id/fullBookTitle"
                     android:layout_alignStart="@+id/fullBookTitle"
                     android:layout_below="@+id/fullBookTitle"
@@ -77,6 +80,7 @@
                     android:padding="10dp">
 
                     <TextView
+                        android:paddingTop="@dimen/default_margin"
                         android:id="@+id/categories"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -84,6 +88,7 @@
                         android:gravity="left|top" />
 
                     <TextView
+                        android:paddingTop="@dimen/default_margin"
                         android:id="@+id/authors"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
