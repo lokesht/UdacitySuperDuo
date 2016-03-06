@@ -22,8 +22,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     public static final String TAG = SyncAdapter.class.getSimpleName();
 
     // Interval at which to sync with the weather, in seconds.
-    // 60 seconds (1 minute) * 60(1 hour) * 5 = 5 hours
-    public static final int SYNC_INTERVAL = 60;
+    // 60 seconds (1 minute) * 60(1 hour) * 2 = 2 hours
+    public static final int SYNC_INTERVAL = 60*60*2;
     public static final int SYNC_FLEXTIME = SYNC_INTERVAL / 3;
 
     public SyncAdapter(Context context, boolean autoInitialize) {

@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import barqsoft.footballscores.sync.SyncAdapter;
+
 public class MainActivity extends ActionBarActivity
 {
     public static String LOG_TAG = "MainActivity";
@@ -32,6 +34,7 @@ public class MainActivity extends ActionBarActivity
                     .add(R.id.container, my_main)
                     .commit();
         }
+
     }
 
 
